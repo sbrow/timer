@@ -1,7 +1,6 @@
 import { EventEmitter } from 'events'
 import { Millisecond } from '../types'
 import { TCState } from '../components/TimerController';
-import { AppDispatcher } from '../dispatcher/AppDispatcher';
 import { Action, TickAction, ActionTypes } from '../actions/Actions';
 import { Dispatcher } from 'flux';
 
@@ -80,5 +79,3 @@ export class TimerStore extends EventEmitter {
     this.removeListener('change', callback);
   }
 }
-
-export var ATimerStore = new TimerStore(AppDispatcher)

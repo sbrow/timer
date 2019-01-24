@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { ATimerStore, TimerStore } from '../stores/TimerStore'
+import { TimerStore } from '../stores/TimerStore'
 import { Millisecond } from '../types';
-import { ActionTypes, StopAction, Action, StartAction, ClearAction } from '../actions/Actions';
+import { StopAction, Action, StartAction, ClearAction } from '../actions/Actions';
 import { Dispatcher } from 'flux';
 import { Toggle, Timer, Restart } from './TimerView';
 

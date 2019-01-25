@@ -47,7 +47,6 @@ export class TimerController extends React.Component<TCProps, TCState> {
 
   componentDidMount(): void {
     this.props.store.addChangeListener(this._onChange)
-    this.props.dispatcher.dispatch(StartAction)
   }
 
   componentWillUnmount(): void {

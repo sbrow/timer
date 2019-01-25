@@ -25,7 +25,7 @@ export class TimerStore extends EventEmitter {
       on: (this.interval !== null),
     }
   }
-  
+
   actionHandler = (payload: Action) => {
     switch (payload.actionType) {
       case ActionTypes.Tick:
@@ -50,8 +50,10 @@ export class TimerStore extends EventEmitter {
   }
 
   start = (): void => {
-    this.interval = setInterval(() => { this.dispatcher.dispatch(TickAction) }, this.step)
-    this.emitChange()
+    if (this.interval === null) {
+      this.interval = setInterval(() => { this.dispatcher.dispatch(TickAction) }, this.step)
+      this.emitChange()
+    }
   }
 
   stop = (): void => {

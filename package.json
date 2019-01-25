@@ -4,11 +4,10 @@
   "description": "",
   "main": "index.jsx",
   "scripts": {
-    "setup": "npm i -g react-scripts electron",
-    "clean": "rm -r ./node_modules && rm ./package-lock.json",
-    "start": "react-scripts start",
-    "start-wp": "webpack-dev-server --progress",
-    "start-app": "BROWSER=none concurrently \"npm start\" \"electron electron.js\"",
+    "clean": "rm -rf ./node_modules && rm ./package-lock.json",
+    "build": "electron-packager .",
+    "start-web": "webpack-dev-server --progress",
+    "start-electron": "npm run start-web & electron electron.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Spencer Brower",
@@ -16,18 +15,17 @@
     "flux": "~2.0.3",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
-    "react-scripts": "^2.1.3",
+    "ts-loader": "^5.3.3",
     "webpack": "4.19.1"
   },
   "devDependencies": {
+    "electron": "^4.0.2",
     "@types/events": "^1.2.0",
     "@types/flux": "^3.1.8",
     "@types/node": "^10.12.18",
     "@types/react": "^16.7.20",
     "@types/react-dom": "^16.0.11",
-    "open-browser-webpack-plugin": "0.0.5",
-    "source-map-loader": "^0.2.4",
-    "ts-loader": "^5.3.3",
+    "electron-packager": "^13.0.1",
     "typescript": "^3.2.4",
     "webpack-cli": "^3.2.1",
     "webpack-dev-server": "^3.1.14"

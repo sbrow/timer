@@ -8,13 +8,12 @@ Make sure you have npm installed. (Get it [here](https://www.npmjs.com/get-npm))
 
 then, run:  
 ```bash
-$ npm run setup
 $ npm install
 ```
 
 ## Usage
 To run in the browser:  
-`$ npm start`
+`$ npm start-web`
 
 To run in electron:  
-`$ npm start-app`
+`$ npm start-electron`

@@ -1,7 +1,14 @@
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+import { Dispatcher } from "flux"
+import * as React from "react"
+import * as ReactDOM from "react-dom"
 
-import { TimerController } from './components/TimerController'
-import { ATimerStore} from  './app'
+import { TimerController } from "./components/TimerController"
+import { Action } from "./global"
+import { TimerStore } from "./stores/TimerStore";
 
-ReactDOM.render(<TimerController store={ATimerStore} dispatcher={ATimerStore.dispatcher}/>, document.querySelector('#timer'))
+let AppDispatcher: Dispatcher<Action> = new Dispatcher<Action>()
+let Timer = new TimerStore(AppDispatcher)
+
+AppDispatcher.register(Timer.actionHandler)
+
+ReactDOM.render(<TimerController store={Timer} />, document.querySelector("#timer"))

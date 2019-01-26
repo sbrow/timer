@@ -1,14 +1,16 @@
-import { EventEmitter } from 'events'
-import { Millisecond } from '../types'
-import { TCState } from '../components/TimerController';
-import { Action, TickAction, ActionTypes } from '../actions/Actions';
-import { Dispatcher } from 'flux';
+import { EventEmitter } from "events"
+import { Dispatcher } from "flux";
+
+import { TickAction } from "../actions/Actions"
+import { TCState } from "../components/TimerController"
+import { ActionTypes } from "../const"
+import { Action, Millisecond } from "../global"
 
 export class TimerStore extends EventEmitter {
-  dispatcher: Dispatcher<Action>
-  time: Millisecond
-  step: Millisecond
-  interval: NodeJS.Timeout | null
+  public dispatcher: Dispatcher<Action>
+  protected time: Millisecond
+  protected step: Millisecond
+  protected interval: NodeJS.Timeout | null
 
   constructor(dispatcher: Dispatcher<Action>) {
     super()
@@ -18,15 +20,15 @@ export class TimerStore extends EventEmitter {
     this.interval = null
   }
 
-  getState(): TCState {
+  public getState(): TCState {
     return {
-      time: this.time,
-      step: this.step,
       on: (this.interval !== null),
+      step: this.step,
+      time: this.time,
     }
   }
 
-  actionHandler = (payload: Action) => {
+  public actionHandler = (payload: Action) => {
     switch (payload.actionType) {
       case ActionTypes.Tick:
         this.tick()
@@ -40,44 +42,43 @@ export class TimerStore extends EventEmitter {
       case ActionTypes.Clear:
         this.clear()
         break
-      default:
-      // Do nothing
     }
   }
-  tick(): void {
+
+  /**
+   * Increases time by step.
+   *
+   * @emits 'change'.
+   *
+   * @memberof TimerStore
+   */
+  protected tick(): void {
     this.time += this.step
-    this.emitChange()
+    this.emit("change")
   }
 
-  start = (): void => {
+  protected start = (): void => {
+    // Don't start if already started.
     if (this.interval === null) {
       this.interval = setInterval(() => { this.dispatcher.dispatch(TickAction) }, this.step)
-      this.emitChange()
+      this.emit("change")
     }
   }
 
-  stop = (): void => {
+  protected stop = (): void => {
+    // Don't stop if timer not running.
     if (this.interval) {
       clearInterval(this.interval)
       this.interval = null
-      this.emitChange()
+      this.emit("change")
     }
   }
 
-  clear = (): void => {
-    this.time = 0
-    this.emitChange()
-  }
-
-  emitChange() {
-    this.emit('change');
-  }
-
-  addChangeListener(callback: () => any) {
-    this.on('change', callback);
-  }
-
-  removeChangeListener(callback: () => any) {
-    this.removeListener('change', callback);
+  protected clear = (): void => {
+    // Don't emit change if store is already clear.
+    if (this.time !== 0) {
+      this.time = 0
+      this.emit("change")
+    }
   }
 }

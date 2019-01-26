@@ -1,32 +1,20 @@
-
-export enum ActionTypes {
-  Tick,
-  Start,
-  Stop,
-  Clear,
-}
+import { ActionTypes } from "../const"
+import { Action } from "../global"
 
 /**
- * @property {actionType}
+ * Creates a new Action with the given type.
  *
- * @interface Action
+ * @param {ActionTypes} type
+ * @returns {Action}
  */
-export interface Action {
-  actionType: ActionTypes
+function NewAction(type: ActionTypes): Action {
+  return { actionType: type }
 }
 
-export var TickAction: any = {
-  actionType: ActionTypes.Tick,
-}
+export let TickAction = NewAction(ActionTypes.Tick)
 
-export var StartAction: Action = {
-  actionType: ActionTypes.Start
-}
+export let StartAction = NewAction(ActionTypes.Start)
 
-export var StopAction: Action = {
-  actionType: ActionTypes.Stop
-}
+export let StopAction = NewAction(ActionTypes.Stop)
 
-export var ClearAction: Action = {
-  actionType: ActionTypes.Clear
-}
+export let ClearAction = NewAction(ActionTypes.Clear)

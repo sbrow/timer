@@ -1,0 +1,22 @@
+{
+    "extends": "tslint:recommended",
+    "linterOptions": {
+        "exclude": [
+            "dist",
+            "node_modules"
+        ]
+    },
+    "rules": {
+        "max-classes-per-file": [
+            false,
+            1
+        ],
+        // "member-access": false,
+        "member-ordering": [
+            true,
+            "fields-first"
+        ],
+        "prefer-const": false,
+        "semicolon": false
+    }
+}

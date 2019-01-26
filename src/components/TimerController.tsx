@@ -1,30 +1,22 @@
-import * as React from 'react'
-import { TimerStore } from '../stores/TimerStore'
-import { Millisecond } from '../types';
-import { StopAction, Action, StartAction, ClearAction } from '../actions/Actions';
-import { Dispatcher } from 'flux';
-import { Toggle, Timer, Restart } from './TimerView';
+import * as React from "react"
 
-var int: NodeJS.Timeout
+import { ClearAction, StartAction, StopAction } from "../actions/Actions"
+import { Action, Millisecond } from "../global"
+import { TimerStore } from "../stores/TimerStore"
+import { Restart, Timer, Toggle } from "./TimerView"
 
 export class TCProps {
-  dispatcher: Dispatcher<Action>
-  store: TimerStore
+  public store: TimerStore
 
-  constructor(store: TimerStore, dispatcher?: Dispatcher<Action>) {
+  constructor(store: TimerStore) {
     this.store = store
-    if (dispatcher === undefined) {
-      this.dispatcher = store.dispatcher
-    } else {
-      this.dispatcher = dispatcher
-    }
   }
 }
 
 export class TCState {
-  time: Millisecond
-  step: Millisecond
-  on: boolean
+  public time: Millisecond
+  public step: Millisecond
+  public on: boolean
 
   constructor(time: Millisecond = 0, step: Millisecond = 100, on: boolean) {
     this.time = time
@@ -34,48 +26,51 @@ export class TCState {
 }
 
 export class TimerController extends React.Component<TCProps, TCState> {
-  state: TCState
+  public state: TCState
 
   constructor(props: TCProps) {
     super(props)
     this.state = this.getInitialState()
   }
 
-  getInitialState() {
-    return this.props.store.getState()
+  public componentDidMount(): void {
+    this.props.store.on("change", this._onChange)
   }
 
-  componentDidMount(): void {
-    this.props.store.addChangeListener(this._onChange)
-  }
-
-  componentWillUnmount(): void {
-    this.props.store.removeChangeListener(this._onChange);
-    this.props.dispatcher.dispatch(StopAction)
-  }
-
-  _onChange = () => {
-    this.setState(this.props.store.getState())
-  }
-
-  toggle = () => {
-    if (this.props.dispatcher) {
-      if (this.state.on) {
-        this.props.dispatcher.dispatch(StopAction)
-      } else {
-        this.props.dispatcher.dispatch(StartAction)
-      }
+  public componentWillUnmount(): void {
+    this.props.store.removeListener("change", this._onChange);
+    if (this.state.on) {
+      this.dispatch(StopAction)
     }
   }
 
-  restart = () => {
-    this.props.dispatcher.dispatch(ClearAction)
+  public _onChange = () => {
+    this.setState(this.props.store.getState())
   }
 
-  render() {
+  public toggle = () => {
+    let payload = (this.state.on) ? StopAction : StartAction
+
+    this.dispatch(payload)
+  }
+
+  public restart = () => {
+    this.dispatch(ClearAction)
+  }
+
+  public render() {
     return <div>
       <Timer time={this.state.time} />
       <Restart onClick={this.restart} /><Toggle on={this.state.on} onClick={this.toggle} />
-    </div>;
+    </div>
+  }
+
+  protected getInitialState() {
+    return this.props.store.getState()
+  }
+  protected dispatch(payload: Action): void {
+    if (this.props.store.dispatcher) {
+      this.props.store.dispatcher.dispatch(payload)
+    }
   }
 }

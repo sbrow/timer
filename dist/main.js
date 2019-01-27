@@ -11,23 +11,30 @@ const BrowserWindow = electron.BrowserWindow;
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
-function createWindow () {
+let size = 8
+let w = 16 * size
+let h = 9 * size
+
+function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    minWidth: 300,
-    minHeight: 300,
-    maxWidth: 800,
-    maxHeight: 600
+    minWidth: w,
+    minHeight: h,
+    width: w,
+    height: h,
+    maxWidth: w,
+    maxHeight: h
   });
 
   // and load the index.html of the app.
-  mainWindow.loadURL('http://localhost:8080');
+  // mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+  mainWindow.loadURL("file://" + __dirname + "/index.html");
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
-  mainWindow.on('closed', function() {
+  mainWindow.on('closed', function () {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.

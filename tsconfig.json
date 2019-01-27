@@ -10,7 +10,6 @@
     "plugins": [
       {
         "name": "typescript-tslint-plugin"
-        // "alwaysShowRuleFailuresAsWarnings": true,
       }
     ]
   },

@@ -1,3 +1,12 @@
+body {
+    background-color:rgb(37, 37, 37);
+}
+button {
+    background-color: darkgray
+}
+div {
+    color: white
+}
 #timer {
     text-align: center;
 }

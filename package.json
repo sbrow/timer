@@ -2,16 +2,19 @@
   "name": "timer",
   "version": "0.2.2",
   "description": "",
-  "main": "index.jsx",
+  "main": "./dist/main.js",
   "scripts": {
     "clean": "rm -rf ./node_modules && rm ./package-lock.json",
-    "build": "electron-packager .",
-    "start-web": "webpack-dev-server --progress",
-    "start-electron": "npm run start-web & electron electron.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "electron-forge build",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "author": "Spencer Brower",
   "dependencies": {
+    "electron-compile": "^6.4.4",
+    "electron-squirrel-startup": "^1.0.0",
     "flux": "~2.0.3",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
@@ -19,13 +22,17 @@
     "webpack": "4.19.1"
   },
   "devDependencies": {
-    "electron": "^4.0.2",
+    "@electron-forge/plugin-webpack": "^6.0.0-beta.22",
     "@types/events": "^1.2.0",
     "@types/flux": "^3.1.8",
     "@types/node": "^10.12.18",
     "@types/react": "^16.7.20",
     "@types/react-dom": "^16.0.11",
-    "electron-packager": "^13.0.1",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "electron-forge": "^5.2.4",
+    "electron-prebuilt-compile": "4.0.0",
     "tslint": "^5.12.1",
     "typescript": "^3.2.4",
     "typescript-tslint-plugin": "^0.3.0",
@@ -37,5 +44,37 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "config": {
+    "forge": {
+      "make_targets": {
+        "win32": [
+          "squirrel"
+        ],
+        "darwin": [
+          "zip"
+        ],
+        "linux": [
+          "deb",
+          "rpm"
+        ]
+      },
+      "electronPackagerConfig": {
+        "packageManager": "npm"
+      },
+      "electronWinstallerConfig": {
+        "name": "timer"
+      },
+      "electronInstallerDebian": {},
+      "electronInstallerRedhat": {},
+      "github_repository": {
+        "owner": "sbrow",
+        "name": "Spencer Brower"
+      },
+      "windowsStoreConfig": {
+        "packageName": "",
+        "name": "timer"
+      }
+    }
+  }
 }

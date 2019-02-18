@@ -6,6 +6,7 @@
     "target": "es5",
     "jsx": "react",
     "allowJs": true,
+    // "moduleResolution": "node",
     "removeComments": true,
     "plugins": [
       {
@@ -13,4 +14,9 @@
       }
     ]
   },
+  "exclude": [
+    "out",
+    "dist",
+    "webpack.config.js"
+  ]
 }

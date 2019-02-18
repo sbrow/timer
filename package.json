@@ -5,7 +5,7 @@
   "main": "./dist/main.js",
   "scripts": {
     "clean": "rm -rf ./node_modules && rm ./package-lock.json",
-    "build": "electron-forge build",
+    "build": "tsc && electron-forge build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron-forge start",
     "package": "electron-forge package",
@@ -31,6 +31,7 @@
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
+    "electron": "^4.0.5",
     "electron-forge": "^5.2.4",
     "electron-prebuilt-compile": "4.0.0",
     "tslint": "^5.12.1",

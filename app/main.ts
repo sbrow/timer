@@ -1,9 +1,9 @@
 "use strict";
 
-import { BrowserWindow } from "electron"
+import * as Electron from "electron"
 
-const electron = require("electron");
-// import 'electron';
+// const electron = Electron // require("electron")
+const electron = require("electron")
 
 // Module to control application life.
 const app = electron.app;
@@ -12,13 +12,13 @@ const BrowserWindow = electron.BrowserWindow;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow: BrowserWindow;
+let mainWindow: Electron.BrowserWindow;
 
 let size = 8
 let w = 16 * size
 let h = 9 * size
 
-function createWindow() {
+function createWindow(): void {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     minHeight: h,

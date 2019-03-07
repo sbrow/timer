@@ -30,7 +30,7 @@ export class TimerController extends React.Component<TCProps, TCState> {
 
   constructor(props: TCProps) {
     super(props)
-    this.state = this.getInitialState()
+    this.state = this.props.store.getState()
   }
 
   public componentDidMount(): void {
@@ -65,9 +65,6 @@ export class TimerController extends React.Component<TCProps, TCState> {
     </div>
   }
 
-  protected getInitialState() {
-    return this.props.store.getState()
-  }
   protected dispatch(payload: Action): void {
     if (this.props.store.dispatcher) {
       this.props.store.dispatcher.dispatch(payload)

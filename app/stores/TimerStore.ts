@@ -30,7 +30,7 @@ export class TimerStore extends EventEmitter {
     return {
       on: (this.interval !== null),
       step: this.step,
-      time: time
+      time,
     }
   }
 

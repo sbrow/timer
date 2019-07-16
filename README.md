@@ -1,4 +1,7 @@
 # Timer
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/sbrow/timer.svg)](https://greenkeeper.io/)
+
 A simple timer app that displays the time in decimal hours ([redmine](http://www.redmine.org/) friendly format).
 
 ![example](./images/example.gif)
